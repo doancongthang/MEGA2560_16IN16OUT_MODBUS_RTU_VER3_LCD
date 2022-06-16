@@ -49,8 +49,17 @@ int output[] = {37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22};
 #pragma endregion Define_ID_Pin_Baurate_Pin
 
 int SLAVE_ID = 1;
+bool configureID = false;
+bool configureBaurate = false;
 long ModbusBaurate;
 ModbusRTU mb;
+#define RTA 15
+#define RTB 14
+
+int counter = 1;
+int aState;
+int aLastState;
+
 void SetIDModbus()
 {
     if (digitalRead(ID1) == HIGH)
@@ -140,6 +149,136 @@ void updateSensor()
         timeSampling = millis();
     }
 }
+void updateRTSW()
+{
+    while ((digitalRead(A7) == LOW))
+    {
+        if(configureID == false)
+        {
+            lcd.setCursor(0, 0);
+            lcd.print("Baurate:");
+            lcd.print(ModbusBaurate);
+            lcd.setCursor(0, 1);
+            lcd.print("ID:");
+            lcd.print(SLAVE_ID);
+            configureID = true;
+        }
+        aState = digitalRead(RTA); // Reads the "current" state of the RTA
+        // If the previous and the current state of the RTA are different, that means a Pulse has occured
+        if (aState != aLastState)
+        {
+            // If the RTB state is different to the RTA state, that means the encoder is rotating clockwise
+            if (digitalRead(RTB) != aState)
+            {
+                counter++;
+            }
+            else
+            {
+                counter--;
+            }
+            if(counter < 0)
+            {
+                lcd.clear();
+                counter = 0;
+            }
+            SLAVE_ID = counter;
+            Serial.print("Position: ");
+            Serial.print("Position: ");
+            Serial.println(counter);
+            lcd.setCursor(0, 0);
+            lcd.print("Baurate:");
+            lcd.print(ModbusBaurate);
+            lcd.setCursor(0, 1);
+            lcd.print("ID:");
+            lcd.print(SLAVE_ID);
+            aLastState = aState; // Updates the previous state of the RTA with the current state
+        }
+    }
+    while ((digitalRead(A7) == HIGH))
+    {
+        configureBaurate = true;
+    }
+    while ((digitalRead(A7) == LOW) && configureBaurate == true)
+    {
+        if (configureID == false)
+        {
+            lcd.setCursor(0, 0);
+            lcd.print("Baurate:");
+            lcd.print(ModbusBaurate);
+            lcd.setCursor(0, 1);
+            lcd.print("ID:");
+            lcd.print(SLAVE_ID);
+            configureID = true;
+        }
+        aState = digitalRead(RTA); // Reads the "current" state of the RTA
+        // If the previous and the current state of the RTA are different, that means a Pulse has occured
+        if (aState != aLastState)
+        {
+            // If the RTB state is different to the RTA state, that means the encoder is rotating clockwise
+            if (digitalRead(RTB) != aState)
+            {
+                counter++;
+            }
+            else
+            {
+                counter--;
+            }
+            if (counter < 0)
+            {
+                counter = 0;
+                lcd.clear();
+                ModbusBaurate = 9600;
+            }
+            if(counter == 1)
+            {
+                lcd.clear();
+                ModbusBaurate = 14400;
+            }
+            if (counter == 2)
+            {
+                lcd.clear();
+                ModbusBaurate = 19200;
+            }
+            if (counter == 3)
+            {
+                lcd.clear();
+                ModbusBaurate = 38400;
+            }
+            if (counter == 4)
+            {
+                lcd.clear();
+                ModbusBaurate = 56000;
+            }
+            if (counter == 5)
+            {
+                lcd.clear();
+                ModbusBaurate = 57600;
+            }
+            if (counter == 6)
+            {
+                lcd.clear();
+                ModbusBaurate = 115200;
+            }
+            if (counter > 7)
+            {
+                counter = 7;
+                lcd.clear();
+                ModbusBaurate = 115200;
+            }
+            lcd.setCursor(0, 0);
+            lcd.print("Baurate:");
+            lcd.print(ModbusBaurate);
+            lcd.setCursor(0, 1);
+            lcd.print("ID:");
+            lcd.print(SLAVE_ID);
+            aLastState = aState; // Updates the previous state of the RTA with the current state
+        }
+        if ((digitalRead(A7) == HIGH))
+        {
+            configureBaurate = false;
+        }
+    }
+}
 void checkconnect()
 {
     static unsigned long timesample = 0;
@@ -162,15 +301,21 @@ void setup()
     adc.begin();
 #pragma endregion Declare_MPC3208
 
-    // initialize the LCD
-    lcd.init(); // initialize the lcd
+    lcd.init();
+    lcd.clear();
     lcd.backlight();
-    lcd.print(" TNV_LAB ");
+    lcd.setCursor(0, 0);
+    lcd.print("TNV_LAB");
     lcd.setCursor(0, 1);
-    lcd.print(" Xin Kinh Chao ");
+    lcd.print("Xin chao!");
     delay(1000);
     lcd.clear();
+    // Config Rotate SW
+    pinMode(RTA, INPUT);
+    pinMode(RTB, INPUT);
 
+    // Reads the initial state of the RTA
+    aLastState = digitalRead(RTA);
     // initialize serial
     Serial.begin(9600);
     // 16Input
@@ -201,6 +346,9 @@ void setup()
 
     SetIDModbus();
     SetbaurateModbusRTU();
+    //Đang test bằng SW and LCD
+    //updateRTSW();
+    // updateRTSW();
     Serial2.begin(ModbusBaurate, SERIAL_8N1);
 
     mb.begin(&Serial2);
@@ -212,14 +360,14 @@ void setup()
     mb.addIsts(0, 0, 16); //  Thêm thanh ghi discrete với địa chỉ bắt đầu = 0, giá trị set ban đầu = false và độ dài thanh ghi = 100
     mb.addIreg(0, 0, 16); //  Thêm thanh ghi discrete với địa chỉ bắt đầu = 0, giá trị set ban đầu = false và độ dài thanh ghi = 100
                           //  mb.Ireg(0,1992);      //  Dùng cho xác thực board từ PLC
-
-    lcd.print("Baurate:");
-    lcd.print(ModbusBaurate);
-    lcd.setCursor(0, 1);
-    lcd.print("ID:");
-    lcd.print(SLAVE_ID);
-    delay(1000);
-    lcd.clear();
+    //attachInterrupt(15, updateRTSW, LOW);
+    // lcd.print("Baurate:");
+    // lcd.print(ModbusBaurate);
+    // lcd.setCursor(0, 1);
+    // lcd.print("ID:");
+    // lcd.print(SLAVE_ID);
+    // delay(1000);
+    // lcd.clear();
 }
 /*----------------------------------------------------------------*/
 /*
@@ -336,16 +484,20 @@ void loop()
     }
     // ADC
     updateSensor();
-    // checkconnect();
-    // Serial.println(SLAVE_ID);
-    // Serial.println(ModbusBaurate);
-    lcd.setCursor(0, 0);
-    lcd.print("Baurate:");
-    lcd.print(ModbusBaurate);
-    lcd.setCursor(0, 1);
-    lcd.print("ID:");
-    lcd.print(SLAVE_ID);
-    //lcd.clear();
+    // updateRTSW();
+    //  checkconnect();
+    //  Serial.println(SLAVE_ID);
+    //  Serial.println(ModbusBaurate);
+    //  lcd.setCursor(0, 0);
+    //  lcd.print("Baurate:");
+    //  lcd.print(ModbusBaurate);
+    //  lcd.setCursor(0, 1);
+    //  lcd.print("ID:");
+    //  lcd.print(SLAVE_ID);
+    // lcd.clear();
+
+    Serial.println(configureID);
+
     mb.task();
     yield();
 }
