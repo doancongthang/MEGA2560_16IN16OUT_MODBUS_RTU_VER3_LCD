@@ -1,0 +1,62 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/include",
+                "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/src",
+                "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/lib/modbus-esp8266/src",
+                "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/lib/MCP3208-master/src",
+                "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/.pio/libdeps/megaatmega2560/ArduinoRS485/src",
+                "C:/Users/doanc/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "C:/Users/doanc/.platformio/packages/framework-arduino-avr/variants/mega",
+                "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/include",
+                    "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/src",
+                    "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/lib/modbus-esp8266/src",
+                    "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/lib/MCP3208-master/src",
+                    "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/.pio/libdeps/megaatmega2560/ArduinoRS485/src",
+                    "C:/Users/doanc/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "C:/Users/doanc/.platformio/packages/framework-arduino-avr/variants/mega",
+                    "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=60002",
+                "ARDUINO_AVR_MEGA2560",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "__AVR_ATmega2560__",
+                ""
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "compilerPath": "C:/Users/doanc/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe",
+            "compilerArgs": [
+                "-mmcu=atmega2560",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
