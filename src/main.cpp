@@ -1,7 +1,20 @@
+/*
+ * Kết nối:
+ *          I2C                 Uno              Mega
+ *          GND                 GND              GND
+ *          VCC                 5V               5V
+ *          SDA                 A4 (SDA)         SDA
+ *          SCL                 A5 (SCL)         SCL
+ *
+ */
 #include <ModbusRTU.h>
 #include <Arduino.h>
 #include <MCP3208.h>
 #include <SPI.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+// LiquidCrystal_I2C lcd(0x27, 16, 2); // 0X3F thay đổi tùy theo địa chỉ I2C, có thể là 0x3F hoặc 0x27
+LiquidCrystal_I2C lcd(0x27, 20, 4); // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 // Firmware FOR BOARD 16IN_16OUT
 // Using Uart2 for RS_485
@@ -13,8 +26,7 @@ MCP3208 adc(3);
 
 //#define SLAVE_ID 1
 // Define for board 16IN_16OUT
-int input[] = {A8, A9, A10, A11, A12, A13, A14, A15,
-               A3, A2, A1, A0, A4, A5, A6, A7};
+int input[] = {A8, A9, A10, A11, A12, A13, A14, A15, A3, A2, A1, A0, A4, A5, A6, A7};
 int output[] = {37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22};
 #pragma region Define_ID_Pin_Baurate_Pin
 // Define ID PinName
@@ -147,9 +159,17 @@ void checkconnect()
 void setup()
 {
 #pragma region Declare_MPC3208
-    // adc.begin(52, 51, 50, 3);
     adc.begin();
 #pragma endregion Declare_MPC3208
+
+    // initialize the LCD
+    lcd.init(); // initialize the lcd
+    lcd.backlight();
+    lcd.print(" TNV_LAB ");
+    lcd.setCursor(0, 1);
+    lcd.print(" Xin Kinh Chao ");
+    delay(1000);
+    lcd.clear();
 
     // initialize serial
     Serial.begin(9600);
@@ -192,6 +212,14 @@ void setup()
     mb.addIsts(0, 0, 16); //  Thêm thanh ghi discrete với địa chỉ bắt đầu = 0, giá trị set ban đầu = false và độ dài thanh ghi = 100
     mb.addIreg(0, 0, 16); //  Thêm thanh ghi discrete với địa chỉ bắt đầu = 0, giá trị set ban đầu = false và độ dài thanh ghi = 100
                           //  mb.Ireg(0,1992);      //  Dùng cho xác thực board từ PLC
+
+    lcd.print("Baurate:");
+    lcd.print(ModbusBaurate);
+    lcd.setCursor(0, 1);
+    lcd.print("ID:");
+    lcd.print(SLAVE_ID);
+    delay(1000);
+    lcd.clear();
 }
 /*----------------------------------------------------------------*/
 /*
@@ -308,10 +336,16 @@ void loop()
     }
     // ADC
     updateSensor();
-    //checkconnect();
-    //Serial.println(SLAVE_ID);
-    //Serial.println(ModbusBaurate);
-
+    // checkconnect();
+    // Serial.println(SLAVE_ID);
+    // Serial.println(ModbusBaurate);
+    lcd.setCursor(0, 0);
+    lcd.print("Baurate:");
+    lcd.print(ModbusBaurate);
+    lcd.setCursor(0, 1);
+    lcd.print("ID:");
+    lcd.print(SLAVE_ID);
+    //lcd.clear();
     mb.task();
     yield();
 }
