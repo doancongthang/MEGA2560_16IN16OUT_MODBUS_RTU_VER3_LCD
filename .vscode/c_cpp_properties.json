@@ -13,13 +13,14 @@
                 "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/lib/modbus-esp8266/src",
                 "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/lib/MCP3208-master/src",
                 "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/.pio/libdeps/megaatmega2560/LiquidCrystal_I2C",
+                "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                 "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/.pio/libdeps/megaatmega2560/ArduinoRS485/src",
                 "C:/Users/doanc/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "C:/Users/doanc/.platformio/packages/framework-arduino-avr/variants/mega",
                 "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                 "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                 "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
-                "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                 ""
             ],
             "browse": {
@@ -30,13 +31,14 @@
                     "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/lib/modbus-esp8266/src",
                     "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/lib/MCP3208-master/src",
                     "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/.pio/libdeps/megaatmega2560/LiquidCrystal_I2C",
+                    "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                     "d:/Freelancer/03_Design board/MEGA2560_16IN16OUT_MODBUS_RTU_VER3_LCD/.pio/libdeps/megaatmega2560/ArduinoRS485/src",
                     "C:/Users/doanc/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "C:/Users/doanc/.platformio/packages/framework-arduino-avr/variants/mega",
                     "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                     "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                     "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
-                    "C:/Users/doanc/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                     ""
                 ]
             },

@@ -4,8 +4,14 @@
 #include <Arduino.h>
 #include <config.h>
 
+#define RTA 15
+#define RTB 14
+
+int counter = 0;
+int aState;
+int aLastState;
+
 int ModbusID;
-int ModbusBaurate;
 
 int input[] = {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}; 
 /*                  { 53, 52, 51, 50, 10, 11, 12, 13,
